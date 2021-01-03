@@ -19,3 +19,19 @@ export const mqttConfig={
     clientId: "server_" + Date.now() +"_"+ Math.random(),
     ...process.env.MQTT_PASSWORD && {password: process.env.MQTT_PASSWORD},
 }
+
+
+export const readerConfig={
+    deleteTime: 2000,
+    syncTime: 300,
+    readerListWaitTime:  2000,
+}
+
+export const serverConfig={
+    httpPort: process.env.PORT || 5000,
+    httpsPort: process.env.HTTPS_PORT || 443,
+    sslCertPath: "",
+    sslKeyPath: "",
+    clientPath: "../client/build/index.html",
+    staticFilesPath: "../client/build"
+}

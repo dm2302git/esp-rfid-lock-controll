@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { AccessLog } from "./AccessLog";
-import { Key } from "./Key";
 import { NewKey } from "./NewKey";
+import { ReaderKey } from "./ReaderKey";
 
 @Entity()
 export class Reader {
@@ -17,14 +17,29 @@ export class Reader {
     @Column("timestamp")
     lastPing: Date
 
-    @OneToMany(()=>AccessLog, access=>access.reader)
+    @Column("varchar", { default: "acctype" })
+    acctypeName: string
+
+    @Column("varchar", { default: "acctype2" })
+    acctype2Name: string
+
+    @Column("varchar", { default: "acctype3" })
+    acctype3Name: string
+
+    @Column("varchar", { default: "acctype4" })
+    acctype4Name: string
+
+
+    @OneToMany(()=>AccessLog, access=>access.reader, {cascade: true})
     accessLogs: AccessLog[];
 
-    @OneToMany(()=>NewKey, newKey=>newKey.reader)
+    @OneToMany(()=>NewKey, newKey=>newKey.reader, {cascade: true})
     newKeys: NewKey[];
     
 
-    @ManyToMany(type => Key, key => key.readers)
-    @JoinTable()
-    keys: Key[];
+    @OneToMany(()=>ReaderKey, readerKey=>readerKey.reader, {cascade: true})
+    readerKeys: ReaderKey[];
+
+    
+    
 }
